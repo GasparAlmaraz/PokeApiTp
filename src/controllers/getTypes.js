@@ -1,4 +1,4 @@
-const { Type } = require('../db');
+
 const axios = require("axios");
 
 const getTypes = async (req, res) => {

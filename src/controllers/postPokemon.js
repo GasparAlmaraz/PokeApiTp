@@ -1,4 +1,3 @@
-const { Pokemon, Type } = require('../db');
 
 const postPokemon = async (req, res) => {
     try {
