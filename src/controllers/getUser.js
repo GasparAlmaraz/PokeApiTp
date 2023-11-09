@@ -1,20 +1,16 @@
 const fs = require('fs');
+const path = require("path");
 const validator = require('validator');
+const validateUser = require('./utils/validateUser');
 
 const getUser = (req, res) => {
     const { username, password } = req.query;
 
-    if (!validator.isEmail(username)) {
-        return res.status(400).json({ message: 'Username is not in the right e-mail format.' });
-    }
-
-    // Validación de longitud de contraseña
-    if (password.length < 8 || password.length > 16) {
-        return res.status(400).json({ message: 'Password must be 8 characters minimum and 16 characters max.' });
-    }
-
     try {
-        if(!fs.existsSync(`../data/${username}.json`)) res.status(404).json({ message: 'This user does not exist. Try register first.'});
+        const validationResult = validateUser(username, password);
+        if(!validationResult.isValid) res.status(400).json({ message: validationResult.message });
+        
+        if(!fs.existsSync(path.resolve(`../data/${username}.json`))) res.status(404).json({ message: 'This user does not exist. Try register first.'});
 
         const result = fs.readFileSync(`../data/${username}.json`, { encoding: 'utf8', flag: 'r' });
         const data = JSON.parse(result);
