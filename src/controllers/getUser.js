@@ -22,7 +22,7 @@ const getUser = (req, res) => {
             return res.status(400).json({ message: 'Password does not match, try again.' });
         }
 
-        return res.status(200).json({ content: data });
+        return res.status(200).json(data);
     } catch (error) {
         // En caso de error, también debes retornar la respuesta en lugar de seguir ejecutando código
         return res.status(500).json({ message: error.message });
