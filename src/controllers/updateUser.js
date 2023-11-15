@@ -4,7 +4,7 @@ const validator = require('validator');
 const validateUser = require('./utils/validateUser');
 
 const updateUser = (req, res) => {
-    const { username, password, wallet, ownedPokemonIds} = req.body;
+    const { username, password, wallet, ownedPokemonIds, answeredQuestions } = req.body;
     try {
         // const validationResult = validateUser(username, password);
         // if(!validationResult.isValid) res.status(400).json({ message: validationResult.message });
@@ -30,7 +30,13 @@ const updateUser = (req, res) => {
         const result = fs.readFileSync(`src/data/${username}.json`, { encoding: 'utf8', flag: 'r' });
         const data = JSON.parse(result);
 
-        let updatedUser = { username: username, password: password ?? data.password, wallet: wallet ?? data.wallet, ownedPokemonIds: ownedPokemonIds ?? data.ownedPokemonIds};
+        let updatedUser = { 
+            username: username,
+            password: password ?? data.password,
+            wallet: wallet ?? data.wallet, 
+            ownedPokemonIds: ownedPokemonIds ?? data.ownedPokemonIds,
+            answeredQuestions: answeredQuestions ?? data.answeredQuestions
+        };
         
         let dataToSave = JSON.stringify(updatedUser);
 
