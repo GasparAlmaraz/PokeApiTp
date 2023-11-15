@@ -21,7 +21,7 @@ const postUser = (req, res) => {
         if(fs.existsSync(`src/data/${username}.json`)) 
             return res.status(403).json({ message: 'This user already exist. Try another username.'});
 
-        let newUser = { username: username, password: password, wallet: 0, ownedPokemonIds: []};
+        let newUser = { username: username, password: password, wallet: 0, ownedPokemonIds: [], answeredQuestions: 0};
         
         let dataToSave = JSON.stringify(newUser);
 
